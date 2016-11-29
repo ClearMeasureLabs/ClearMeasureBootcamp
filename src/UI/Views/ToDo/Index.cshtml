@@ -1,0 +1,36 @@
+﻿@using ClearMeasure.Bootcamp.Core.Model
+@using UI.Models
+@model ClearMeasure.Bootcamp.UI.Models.ToDoModel
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th colspan="2">Submitted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ExpenseReport report in Model.Submitted)
+            {
+                <tr>
+                    <td>[@Html.ActionLink(report.Number, "Manage", "ExpenseReport", new { id = report.Number, mode = EditMode.Edit }, null)]</td>
+                    <td>@report.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th colspan="2">Approved</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ExpenseReport report in Model.Approved)
+            {
+                <tr>
+                    <td>[@Html.ActionLink(report.Number, "Manage", "ExpenseReport", new { id = report.Number, mode = EditMode.Edit }, null)]</td>
+                    <td>@report.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>

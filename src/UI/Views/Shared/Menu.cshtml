@@ -1,0 +1,12 @@
+﻿@using ClearMeasure.Bootcamp.Core.Model
+@using ClearMeasure.Bootcamp.UI.Helpers
+@using ClearMeasure.Bootcamp.UI.Models
+@using UI.Models
+@model NavigationMenuModel
+
+<ul class="nav navbar-nav" style="font-weight: bold">
+    <li><a style="padding:0px" href="/"><img src="/Content/ClearMeasureLogo.png" /></a></li>
+    <li>@Html.ActionLink("New", "Manage", "ExpenseReport", new {id = "", mode = EditMode.New}, null)</li>
+    <li>@Html.ActionLink("Search", "Index", "ExpenseReportSearch", new { }, null)</li>
+    <li>@Html.ActionLink("My Expenses", "Index", "ExpenseReportSearch", new ExpenseReportSearchModel.SearchFilters { Submitter = Html.GetCurrentUser() != null ? Html.GetCurrentUser().UserName : null }, null)</li>
+</ul>

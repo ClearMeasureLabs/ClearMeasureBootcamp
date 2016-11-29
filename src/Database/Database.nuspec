@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata schemaVersion="2">
+    <id>Database</id>
+	  <version>9.9.9</version>
+    <authors>Clear Measure</authors>
+    <projectUrl>http://github.com/ClearMeasureLabs/ClearMeasureBootcamp</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<description>...</description>
+
+  </metadata>
+  <files>
+    <file src="scripts\**" target="scripts" />
+  </files>
+</package>

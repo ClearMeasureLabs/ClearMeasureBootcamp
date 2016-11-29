@@ -1,0 +1,88 @@
+﻿@using ClearMeasure.Bootcamp.UI.Helpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="icon"
+          type="image/png"
+          href="/Content/favicon.ico">
+</head>
+<body style="padding-top: 50px">
+    @if (Request.IsAuthenticated)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    @Html.Action("Menu", "Navigation")
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <div class="row">
+                <h1>Expense Report System</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-3 well form-horizontal">
+                    <fieldset>
+                        <legend class="h4">
+                            Welcome, @Html.GetCurrentUser().GetFullName()
+
+                            @Html.ActionLink("Logout", "Logout", "Account")
+                        </legend>
+
+
+                        <div class="form-group">
+                            @Html.Action("Index", "ToDo")
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-xs-9">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header navbar-text">
+                    Clear Measure Master Developer Boot Camp
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <div class="row">
+                <h1>Expense Report System</h1>
+            </div>
+            <div id=unauthorized class=content-container>
+                <p>
+                    This Expense Report system allows an employee to create and assign an
+                    expense report. This system uses a workflow paradigm to submit the
+                    expense report and keep track of its status. At each state change,
+                    the system does something interesting.
+                </p>
+                @RenderBody()
+            </div>
+        </div>
+    }
+
+    <div class="container">
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Version @Html.GetProductVersionNumber()</p>
+            <p>Environment: #{Octopus.Environment.Name} - Machine: #{Octopus.Machine.Name} - Release: #{Octopus.Release.Number}</p>
+            <p>Database: #{DatabaseName}</p>
+            <p>Hello MeasureUP</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

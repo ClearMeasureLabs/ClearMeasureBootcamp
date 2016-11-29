@@ -1,0 +1,137 @@
+﻿
+@using System.Activities.Expressions
+@using ClearMeasure.Bootcamp.Core.Model
+@using ClearMeasure.Bootcamp.Core.Model.ExpenseReportWorkflow
+@using ClearMeasure.Bootcamp.Core.Services
+@using ClearMeasure.Bootcamp.UI.Helpers
+@using ClearMeasure.Bootcamp.UI.Models.SelectListProviders
+@model ClearMeasure.Bootcamp.UI.Models.ExpenseReportManageModel
+
+@{
+    ViewBag.Title = "New ExpenseReport";
+}
+
+<div class="well">
+    <form method="POST" class="form-horizontal">
+    <fieldset>
+        <legend class="h3">Expense Report #@Html.EditorFor(x => x.ExpenseReportNumber) (@Html.EditorFor(x => x.Status))</legend>
+        @Html.HiddenFor(x => x.IsReadOnly)
+        @Html.HiddenFor(x => x.Status)
+        @Html.HiddenFor(x => x.CanReassign)
+        @Html.HiddenFor(x => x.SubmitterUserName)
+        @Html.ValidationSummary()
+    <div class="form-group">
+        @Html.LabelFor(x => x.SubmitterFullName, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">@Html.EditorFor(x => x.SubmitterFullName, new{@class="form-control"})</div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.ApproverUserName, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @if (Model.CanReassign && !Model.IsReadOnly)
+                  {
+                      @Html.DropDownListFor(x => x.ApproverUserName, UserSelectListProvider.GetOptions(Model.ApproverUserName), new { @class = "form-control" })
+                  }
+                  else
+                  {
+                      @Html.DropDownListFor(x => x.ApproverUserName, UserSelectListProvider.GetOptions(Model.ApproverUserName), new { @class = "form-control", disabled = "disabled" })
+                      @Html.HiddenFor(x => x.ApproverUserName)
+                  }
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Title, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+
+            @if (!Model.IsReadOnly)
+            {
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", placeholder="Title" })
+            }
+            else
+            {
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", disabled = "disabled" })
+            }
+        </div>
+    </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Description, new {@class = "col-lg-2 control-label"})
+            <div class="col-lg-10">
+                @if (!Model.IsReadOnly)
+                {
+                    @Html.TextAreaFor(x => x.Description, new {rows = "3", @class = "form-control", placeholder = "Description"})
+                }
+                else
+                {
+                    @Html.TextAreaFor(x => x.Description, new {rows = "3", @class = "form-control", disabled = "disabled"})
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Total, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @if (!Model.IsReadOnly)
+                {
+                    @Html.TextBoxFor(x => x.Total, new { @class = "form-control", placeholder = "Total" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(x => x.Total, new { @class = "form-control", disabled = "disabled" })
+                }
+            </div>
+        </div>
+@*    <div class="form-group">*@
+@*        <div class="col-lg-2">Created Date</div>*@
+@*        <div class="col-lg-10">@Model.SubmittedDate</div>*@
+@*    </div>*@
+
+            
+            
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-collapse">
+                        <div style="padding:5px; text-align:right;">
+                            @if (Model.IsReadOnly)
+                            {
+                                <text>This expense report is read-only for you at this time.</text>
+                            }
+                            else
+                            {
+                                foreach (IStateCommand command in Html.GetValidCommands((ExpenseReport)ViewBag.ExpenseReport, (Employee)ViewBag.CurrentUser))
+                                {
+                                    <button class="btn btn-default" type="submit" name="command" value="@command.TransitionVerbPresentTense">@command.TransitionVerbPresentTense</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+    </fieldset>
+    @if (Model.ExpenseReport != null && Model.ExpenseReport.GetAuditEntries().Any())
+    {
+        <h3>Audit History</h3>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Date</th>
+                    <th>End Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 0;
+                    foreach (var auditEntry in Model.ExpenseReport.GetAuditEntries())
+                    {
+                    <tr>
+                        <td>@auditEntry.Employee.GetFullName()</td>
+                        <td>@auditEntry.Date</td>
+                        <td>@auditEntry.EndStatus</td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    </form>
+</div>

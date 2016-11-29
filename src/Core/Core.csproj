@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0649AD4E-44C9-45DB-A4A9-322E36520F74}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ClearMeasure.Bootcamp.Core</RootNamespace>
+    <AssemblyName>ClearMeasure.Bootcamp.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CMProd|AnyCPU'">
+    <OutputPath>bin\CMProd\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DevOpsProd|AnyCPU'">
+    <OutputPath>bin\DevOpsProd\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Label="SlowCheetah">
+    <SlowCheetahToolsPath>$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\..\packages\SlowCheetah.2.5.14\tools\))</SlowCheetahToolsPath>
+    <SlowCheetah_EnableImportFromNuGet Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='' ">true</SlowCheetah_EnableImportFromNuGet>
+    <SlowCheetah_NuGetImportPath Condition=" '$(SlowCheetah_NuGetImportPath)'=='' ">$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\Properties\SlowCheetah\SlowCheetah.Transforms.targets ))</SlowCheetah_NuGetImportPath>
+    <SlowCheetahTargets Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='true' and Exists('$(SlowCheetah_NuGetImportPath)') ">$(SlowCheetah_NuGetImportPath)</SlowCheetahTargets>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Bus.cs" />
+    <Compile Include="Features\MutlipleExpenses\AddExpenseCommand.cs" />
+    <Compile Include="Features\MutlipleExpenses\AddExpenseResult.cs" />
+    <Compile Include="Features\SearchExpenseReports\ExpenseReportSpecificationQuery.cs" />
+    <Compile Include="Model\Expense.cs" />
+    <Compile Include="Plugins\DataAccess\ExpenseReportByNumberQuery.cs" />
+    <Compile Include="Plugins\DataAccess\ExpenseReportSaveCommand.cs" />
+    <Compile Include="Plugins\DataAccess\MultipleResult.cs" />
+    <Compile Include="Features\Workflow\ExecuteTransitionCommand.cs" />
+    <Compile Include="Features\Workflow\ExecuteTransitionCommandHandler.cs" />
+    <Compile Include="Features\Workflow\ExecuteTransitionResult.cs" />
+    <Compile Include="Model\ExpenseReportAnalytics\AddExpenseReportFactResult.cs" />
+    <Compile Include="Model\ExpenseReportAnalytics\ExpenseReportFact.cs" />
+    <Compile Include="Model\ExpenseReportAnalytics\AddExpenseReportFactCommand.cs" />
+    <Compile Include="Model\Manager.cs" />
+    <Compile Include="Model\ExpenseReportWorkflow\NextStep.cs" />
+    <Compile Include="IRequest.cs" />
+    <Compile Include="IRequestHandler.cs" />
+    <Compile Include="Model\AuditEntry.cs" />
+    <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\ExpenseReportWorkflow\SubmittedToApprovedCommand.cs" />
+    <Compile Include="Model\ExpenseReportWorkflow\DraftToCancelledCommand.cs" />
+    <Compile Include="Model\ListItem.cs" />
+    <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\ExpenseReportWorkflow\DraftToSubmittedCommand.cs" />
+    <Compile Include="Model\ExpenseReportWorkflow\DraftingCommand.cs" />
+    <Compile Include="Model\ExpenseReportWorkflow\StateCommandBase.cs" />
+    <Compile Include="Model\ExpenseReport.cs" />
+    <Compile Include="Model\ExpenseReportStatus.cs" />
+    <Compile Include="Plugins\DataAccess\EmployeeByUserNameQuery.cs" />
+    <Compile Include="Plugins\DataAccess\SingleResult.cs" />
+    <Compile Include="Plugins\DataAccess\EmployeeSpecificationQuery.cs" />
+    <Compile Include="Services\IApplicationInformation.cs" />
+    <Compile Include="Services\ICalendar.cs" />
+    <Compile Include="Services\Impl\ApplicationInformation.cs" />
+    <Compile Include="Services\Impl\Calendar.cs" />
+    <Compile Include="Services\Impl\WorkflowFacilitator.cs" />
+    <Compile Include="Services\Impl\ExpenseReportBuilder.cs" />
+    <Compile Include="Services\Impl\NumberGenerator.cs" />
+    <Compile Include="Model\ExpenseReportWorkflow\IStateCommand.cs" />
+    <Compile Include="Services\IUserSession.cs" />
+    <Compile Include="Services\IWorkflowFacilitator.cs" />
+    <Compile Include="Services\IExpenseReportBuilder.cs" />
+    <Compile Include="Services\INumberGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

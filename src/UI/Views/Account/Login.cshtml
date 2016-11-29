@@ -1,0 +1,20 @@
+﻿@using ClearMeasure.Bootcamp.UI.Models.SelectListProviders
+@model UI.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="well container-fluid">
+    <form class="form-horizontal" method="POST">
+        <fieldset>
+            <legend>Please select a user and log in:</legend>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(x => x.UserName, UserSelectListProvider.GetOptions(),
+                    new {@class="form-control"})        
+                </div>
+                <button type="submit" class="btn btn-primary col-sm-2">Log In</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
