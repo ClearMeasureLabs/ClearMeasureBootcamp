@@ -2,6 +2,9 @@
 
 namespace ClearMeasure.Bootcamp.Core.Services
 {
+    /// <summary>
+    /// Information about an application
+    /// </summary>
 	public interface IApplicationInformation
 	{
 		string ProductName { get; }
