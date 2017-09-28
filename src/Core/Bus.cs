@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace ClearMeasure.Bootcamp.Core
 {
@@ -6,7 +7,7 @@ namespace ClearMeasure.Bootcamp.Core
 
     public class Bus
     {
-        private readonly SingleInstanceFactory _singleInstanceFactory;
+        private readonly SingleInstanceFactory _singleInstanceFactory; // create single instance factory
 
         public Bus()
         {
@@ -16,7 +17,10 @@ namespace ClearMeasure.Bootcamp.Core
         {
             _singleInstanceFactory = singleInstanceFactory;
         }
-
+        /**
+         * Send request wrapped in IRequest interface. TResponse is the return value for this method as well as 
+         * IRequest interface.
+        */
         public virtual TResponse Send<TResponse>(IRequest<TResponse> request)
         {
             var defaultHandler = GetHandler(request);
