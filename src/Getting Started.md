@@ -56,7 +56,7 @@ Core project consists of 5 main parts:
 
 We can discuss them in detail.
 
-** Features **
+**Features**
 
 Expense Report features contains 3 main areas:
 
@@ -64,7 +64,7 @@ Expense Report features contains 3 main areas:
 2. SearchExpenseReports
 3. Workflow
 
-** MulitpleExpenses **
+**MulitpleExpenses**
 
 MulitpleExpenses features AddExpenseCommand and AddexpenseResult.
 
@@ -73,12 +73,12 @@ Description and CurrentData.
 
 The result is of type AddExpenseResult.
 
-** SearchExpenseReports  **
+**SearchExpenseReports**
 
 SearchExpenseReports feature contains ExpenseReportSpecificationQuery which is a 
 request. SearchReportSpeicificaitonQuery contains a request which takes Status, Approver, Submitter.
 
-** Workflow **
+**Workflow**
 
 Workflow contains 3 files:
 
@@ -93,7 +93,7 @@ saves expense report and returns ExecuteTransitionResult result.
 
 ExecuteTransitionResult is the result that contains NewStatus, NextStep, Action, Message.
 
-** Model **
+**Model**
 
 The next section of the Core project is the Model. This is the most straight forward piece 
 of the project. Model contains objects that are used in other piece of the core and the solution.
@@ -105,13 +105,13 @@ StateCommandBase and there are a few objects that derive from the base command. 
 implements the IStateCommand interface.
 
 
-** Plugins / DataAccess **
+**Plugins / DataAccess**
 
 Pluging area contains a DataAccess folder. The contents are models of TRequest type such as 
 EmployeeByUserNameQuery, EmployeeSpecificationQuery, ExpenseReportByNumberQuery, ExpenseReportSaveCommand.
 It also contains SingleResult and MulipleResult is of TResponse type.
 
-** Services **
+**Services**
 
 
 
