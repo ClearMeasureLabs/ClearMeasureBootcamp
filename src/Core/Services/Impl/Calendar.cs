@@ -8,5 +8,10 @@ namespace ClearMeasure.Bootcamp.Core.Services.Impl
 		{
 			return DateTime.Now;
 		}
+
+        public int GetCurrentMonth()
+        {
+            return DateTime.Now.Month;
+        }
 	}
 }

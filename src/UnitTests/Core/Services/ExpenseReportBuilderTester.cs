@@ -21,7 +21,7 @@ namespace ClearMeasure.Bootcamp.UnitTests.Core.Services
 
             var builder = new ExpenseReportBuilder(generator, calendar);
             var creator = new Employee();
-            ExpenseReport expenseReport = builder.Build(creator);
+            ExpenseReport expenseReport = builder.Build(creator).Result;
 
             mocks.VerifyAll();
             Assert.That(expenseReport.Submitter, Is.EqualTo(creator));
