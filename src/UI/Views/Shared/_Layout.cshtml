@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clear Measure Bootcamp</title>
+    <title>Expense Report</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="icon"
@@ -75,8 +75,8 @@
     <div class="container">
         <footer>
             <p>&copy; @DateTime.Now.Year - Version @Html.GetProductVersionNumber()</p>
-            <p>Environment: #{Octopus.Environment.Name} - Machine: #{Octopus.Machine.Name} - Release: #{Octopus.Release.Number}</p>
-            <p>Database: #{DatabaseName}</p>
+            <p>Environment: @Environment.UserName - Machine: @Environment.MachineName - Release: @Environment.Version</p>
+            <p>Database: @Environment.WorkingSet</p>
             <p>Hello there!</p>
         </footer>
     </div>
