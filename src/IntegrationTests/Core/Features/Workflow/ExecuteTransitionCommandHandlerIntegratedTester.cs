@@ -19,7 +19,7 @@ namespace ClearMeasure.Bootcamp.IntegrationTests.Core.Features.Workflow
     public class ExecuteTransitionCommandHandlerIntegratedTester
     {
         [Test]
-        public async void ShouldExecuteDraftTransition()
+        public void ShouldExecuteDraftTransition()
         {
             new DatabaseTester().Clean();
 

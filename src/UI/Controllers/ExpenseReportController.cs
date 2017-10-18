@@ -40,7 +40,7 @@ namespace ClearMeasure.Bootcamp.UI.Controllers
 
             if (mode == EditMode.New)
             {
-                expenseReport = _expenseReportBuilder.Build(currentUser).Result;
+                expenseReport = _expenseReportBuilder.Build(currentUser);
                 if (!string.IsNullOrEmpty(id))
                     expenseReport.Number = id;
             }
@@ -65,7 +65,7 @@ namespace ClearMeasure.Bootcamp.UI.Controllers
             ExpenseReport expenseReport;
 
             if (model.Mode == EditMode.New)
-                expenseReport = _expenseReportBuilder.Build(currentUser).Result;
+                expenseReport = _expenseReportBuilder.Build(currentUser);
             else
                 expenseReport = _bus.Send(new ExpenseReportByNumberQuery { ExpenseReportNumber = model.ExpenseReportNumber }).Result;
 

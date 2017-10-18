@@ -5,7 +5,6 @@ using ClearMeasure.Bootcamp.Core.Model;
 using ClearMeasure.Bootcamp.Core.Plugins.DataAccess;
 using ClearMeasure.Bootcamp.UI.Helpers.ActionFilters;
 using ClearMeasure.Bootcamp.UI.Models;
-using System.Threading.Tasks;
 
 namespace ClearMeasure.Bootcamp.UI.Controllers
 {
@@ -20,7 +19,7 @@ namespace ClearMeasure.Bootcamp.UI.Controllers
             _bus = bus;
         }
 
-        public async Task<ActionResult> Index(ExpenseReportSearchModel.SearchFilters filters)
+        public ActionResult Index(ExpenseReportSearchModel.SearchFilters filters)
         {
             var model = new ExpenseReportSearchModel();
             if (filters != null)

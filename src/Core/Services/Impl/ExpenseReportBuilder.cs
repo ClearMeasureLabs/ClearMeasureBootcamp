@@ -1,5 +1,4 @@
 using ClearMeasure.Bootcamp.Core.Model;
-using System.Threading.Tasks;
 
 namespace ClearMeasure.Bootcamp.Core.Services.Impl
 {
@@ -14,7 +13,7 @@ namespace ClearMeasure.Bootcamp.Core.Services.Impl
 			_calendar = calendar;
 		}
 
-		public async Task<ExpenseReport> Build(Employee creator)
+		public ExpenseReport Build(Employee creator)
 		{         
 			ExpenseReport expenseReport = new ExpenseReport();
 			expenseReport.Number = _numberGenerator.GenerateNumber();
