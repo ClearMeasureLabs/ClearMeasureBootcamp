@@ -1,4 +1,4 @@
-Framework "4.6"
+Framework "4.6" 
 
 properties {
     $projectName = "ClearMeasure.Bootcamp"
@@ -22,7 +22,7 @@ properties {
     $runOctoPack = $env:RunOctoPack
 
     $databaseName = $projectName
-    $databaseServer = "localhost\SQLEXPRESS2014"
+    $databaseServer = "localhost\SQLEXPRESS01"
     $databaseScripts = "$source_dir\Database\scripts"
     $hibernateConfig = "$source_dir\hibernate.cfg.xml"
     $schemaDatabaseName = $databaseName + "_schema"
