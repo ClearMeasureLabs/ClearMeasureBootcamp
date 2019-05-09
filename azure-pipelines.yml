@@ -17,4 +17,4 @@ variables:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'ci.bat
+    script: 'ci.bat'
