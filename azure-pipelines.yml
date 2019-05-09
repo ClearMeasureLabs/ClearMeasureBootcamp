@@ -8,13 +8,78 @@ trigger:
 
 pool:
   vmImage: 'windows-latest'
+  demands: azureps
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+variables:
+  DatabaseResourceGroupName: 'BuildDatabases-$(System.TeamProject)-$(Build.DefinitionName)-$(Build.BuildID)'
+
 steps:
-- task: CmdLine@2
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Create build database'
   inputs:
-    script: 'ci.bat'
+    azureSubscription: 'MVP Azure Community (7077ad68-92ba-412e-9bf8-67eb78f9481b)'
+    resourceGroupName: '$(DatabaseResourceGroupName)'
+    location: 'South Central US'
+    csmFile: src/Database/DatabaseARM.json
+    overrideParameters: '-databaseLogin $(DatabaseUser) -databaseLoginPassword $(DatabasePassword) -skuCapacity 1 -databaseName $(DatabaseName) -collation SQL_Latin1_General_CP1_CI_AS -edition Basic -maxSizeBytes 1073741824 -requestedServiceObjectiveName Basic'
+
+- task: AzurePowerShell@2
+  displayName: 'Capture created database variables'
+  inputs:
+    azureSubscription: 'MVP Azure Community (7077ad68-92ba-412e-9bf8-67eb78f9481b)'
+    ScriptType: InlineScript
+    Inline: |
+     $azureRmResourceGroupDeployment = Get-AzureRmResourceGroupDeployment -ResourceGroupName "$(DatabaseResourceGroupName)" | Sort-Object Timestamp -Descending | Select-Object -First 1        
+     
+     $azureRmResourceGroupDeployment.Outputs.GetEnumerator() | ForEach-Object {
+         $variableName = $_.key
+         $variableValue = $_.value.Value
+         Write-Host "##vso[task.setvariable variable=$variableName;]$variableValue" 
+         Write-Host "$variableName $variableValue" 
+     }
+    azurePowerShellVersion: LatestVersion
+
+- script: |
+   set DatabasePassword=$(DatabasePassword)
+   $(Build.SourcesDirectory)\build.bat ci-assume-db
+  displayName: 'Build Script'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results from NUnit Tests using VSTest Adapter'
+  inputs:
+    testResultsFormat: VSTest
+    testResultsFiles: |
+     *.trx
+     **\*.coverage
+    searchFolder: '$(System.DefaultWorkingDirectory)\TestResults'
+    testRunTitle: 'Build-$(Build.BuildNumber) Unit & Integration Tests'
+  condition: succeededOrFailed()
+
+- task: CopyPublishBuildArtifacts@1
+  displayName: 'Copy Artifacts'
+  inputs:
+    Contents: |
+     build\*.$(Build.BuildNumber).nupkg
+     build\test\*
+     src\packages\NUnit.Runners*\**
+     src\packages\NUnit.Console*\**
+     src\packages\SpecFlow*\tools\*
+     src\PerformanceTests\bin\**
+    ArtifactName: drop
+    ArtifactType: Container
+  enabled: false
+
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Drop DatabaseResourceGroup'
+  inputs:
+    azureSubscription: 'MVP Azure Community (7077ad68-92ba-412e-9bf8-67eb78f9481b)'
+    action: DeleteRG
+    resourceGroupName: '$(DatabaseResourceGroupName)'
+  continueOnError: true
+  condition: always()
+
