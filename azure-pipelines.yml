@@ -72,7 +72,7 @@ steps:
      src\PerformanceTests\bin\**
     ArtifactName: drop
     ArtifactType: Container
-  enabled: false
+  enabled: 'false'
 
 - task: AzureResourceGroupDeployment@2
   displayName: 'Drop DatabaseResourceGroup'
